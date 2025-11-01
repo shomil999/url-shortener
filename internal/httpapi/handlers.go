@@ -19,6 +19,7 @@ func NewHandlers(svc *shortener.Service, met *metrics.Metrics) *Handlers {
 	return &Handlers{svc: svc, met: met}
 }
 
+//Shorten URL handler
 func (h *Handlers) ShortenURL(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -37,6 +38,7 @@ func (h *Handlers) ShortenURL(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{"short_url": short, "code": code})
 }
 
+//Redirect handler
 func (h *Handlers) Redirect(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -61,6 +63,7 @@ func (h *Handlers) Redirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, url, http.StatusFound)
 }
 
+//Top Domains handler
 func (h *Handlers) TopDomains(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)

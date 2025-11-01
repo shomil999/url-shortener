@@ -29,9 +29,9 @@ func main() {
 	h := httpapi.NewHandlers(svc, met)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/api/v1/shorten", h.ShortenURL)
-	mux.HandleFunc("/api/v1/metrics/top-domains", h.TopDomains)
-	mux.HandleFunc("/", h.Redirect)
+	mux.HandleFunc("/api/v1/shorten", h.ShortenURL)                          // shorten api
+	mux.HandleFunc("/api/v1/metrics/top-domains", h.TopDomains)				 // top 3 domains api
+	mux.HandleFunc("/", h.Redirect)                                          // redirect api
 
 	srv := &http.Server{
 		Addr:         ":" + port,

@@ -9,7 +9,6 @@ import (
 	"github.com/shomil999/url-shortener/internal/metrics"
 	"github.com/shomil999/url-shortener/internal/store"
 	"github.com/shomil999/url-shortener/pkg/util"
-	"fmt"
 )
 
 type Service struct {
