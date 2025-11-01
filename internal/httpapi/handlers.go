@@ -60,3 +60,17 @@ func (h *Handlers) Redirect(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Redirecting %s -> %s", code, url)
 	http.Redirect(w, r, url, http.StatusFound)
 }
+
+func (h *Handlers) TopDomains(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+	writeJSON(w, http.StatusOK, h.met.TopN(3))
+}
+
+func writeJSON(w http.ResponseWriter, status int, v any) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	json.NewEncoder(w).Encode(v)
+}
