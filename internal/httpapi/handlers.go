@@ -36,3 +36,27 @@ func (h *Handlers) ShortenURL(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJSON(w, http.StatusOK, map[string]string{"short_url": short, "code": code})
 }
+
+func (h *Handlers) Redirect(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+	code := strings.TrimPrefix(r.URL.Path, "/")
+	if code == "" || strings.HasPrefix(code, "api/") {
+		if code == "" {
+			writeJSON(w, http.StatusOK, map[string]string{"message": "Go URL Shortener Service"})
+			return
+		}
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	url, err := h.svc.Resolve(code)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("code not found"))
+		return
+	}
+	log.Printf("Redirecting %s -> %s", code, url)
+	http.Redirect(w, r, url, http.StatusFound)
+}
