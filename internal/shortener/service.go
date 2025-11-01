@@ -9,6 +9,7 @@ import (
 	"github.com/shomil999/url-shortener/internal/metrics"
 	"github.com/shomil999/url-shortener/internal/store"
 	"github.com/shomil999/url-shortener/pkg/util"
+	"fmt"
 )
 
 type Service struct {
@@ -31,8 +32,11 @@ func (s *Service) Shorten(raw string) (shortURL, code string, err error) {
 	u.Host = strings.ToLower(u.Host)
 	norm := u.String()
 
+	// fmt.Println("Host: ", u.Host)
+	// fmt.Println("norm: ", norm)
+
 	if existing, err2 := s.store.GetByURL(norm); err2 == nil {
-		s.metrics.IncDomain(util.DomainKey(u.Host))
+		// s.metrics.IncDomain(util.DomainKey(u.Host))
 		return s.baseURL + "/" + existing, existing, nil
 	}
 
