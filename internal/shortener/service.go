@@ -45,3 +45,7 @@ func (s *Service) Shorten(raw string) (shortURL, code string, err error) {
 	s.metrics.IncDomain(util.DomainKey(u.Host))
 	return s.baseURL + "/" + code, code, nil
 }
+
+func (s *Service) Resolve(code string) (string, error) {
+	return s.store.GetByCode(code)
+}
