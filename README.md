@@ -1,5 +1,8 @@
 # Url Shortener
 
+* A simple yet production-grade **URL Shortener Service** built in **Go (Golang)** — similar to Bitly.  
+It provides REST APIs to shorten URLs, redirect users, and view analytics about the most shortened domains.
+
                         ┌────────────────────────────┐
                         │        HTTP Layer          │
                         │  internal/httpapi          │
@@ -76,4 +79,67 @@ go mod tidy
 ```bash
 go run ./cmd/server
 ```
-✅ Dockerized for easy local deployment
+
+# Run with Docker
+
+```
+docker pull shomil99/url-shortener:v1
+```
+
+* If above doesn't work, then build locally
+```
+docker build -t shomil/url-shortener:v1 .
+docker run -p 8080:8080 -e BASE_URL=http://localhost:8080 shomil/url-shortener:v1
+```
+```
+🚀 Server started at http://localhost:8080
+```
+
+# API Endpoints
+
+| Method | Endpoint                      | Description                        |
+| ------ | ----------------------------- | ---------------------------------- |
+| `POST` | `/api/v1/shorten`             | Shorten a long URL                 |
+| `GET`  | `/{code}`                     | Redirect to original URL           |
+| `GET`  | `/api/v1/metrics/top-domains` | Fetch top 3 most shortened domains |
+
+# Example Usage
+
+* Use postman or use following curl commands.
+  
+* **Shorten URL**
+```
+curl -X POST http://localhost:8080/api/v1/shorten \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://www.udemy.com/course/kubernetes"}'
+```
+**Response**
+```json
+{
+  "short_url": "http://localhost:8080/aBc123",
+  "code": "aBc123"
+}
+```
+
+**Redirect**
+```
+curl -i http://localhost:8080/aBc123
+```
+** Response **
+```
+HTTP/1.1 302 Found
+Location: https://www.udemy.com/course/kubernetes
+```
+
+**Metrics**
+```
+curl http://localhost:8080/api/v1/metrics/top-domains
+```
+** Response **
+```json
+[
+  {"domain":"udemy.com","count":3},
+  {"domain":"youtube.com","count":2},
+  {"domain":"wikipedia.org","count":1}
+]
+```
