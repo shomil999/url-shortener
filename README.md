@@ -42,6 +42,7 @@
 
 # Project Structure
 
+```
 url-shortener/
 ├── cmd/
 │   └── server/
@@ -56,6 +57,7 @@ url-shortener/
 ├── go.mod
 ├── Dockerfile
 └── README.md
+```
 
 # Local Setup (without Docker)
 **Prerequisites**
