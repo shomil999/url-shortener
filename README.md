@@ -81,9 +81,10 @@ go run ./cmd/server
 ```
 
 # Run with Docker
-
+* Image is present at "https://hub.docker.com/r/shomil99/url-shortener"
 ```
 docker pull shomil99/url-shortener:v1
+docker run -p 8080:8080 -e BASE_URL=http://localhost:8080 shomil/url-shortener:v1
 ```
 
 * If above doesn't work, then build locally
@@ -105,13 +106,15 @@ docker run -p 8080:8080 -e BASE_URL=http://localhost:8080 shomil/url-shortener:v
 
 # Example Usage
 
-* Use postman or use following curl commands.
-  
-* **Shorten URL**
+* Use postman for above apis. (Recommended)
+
+* If want to use 'curl', then use below commands in "poweshell"
+* **Shorten URL** 
 ```
-curl -X POST http://localhost:8080/api/v1/shorten \
-  -H "Content-Type: application/json" \
-  -d '{"url":"https://www.udemy.com/course/kubernetes"}'
+Invoke-RestMethod -Uri "http://localhost:8080/api/v1/shorten" `
+  -Method POST `
+  -Headers @{ "Content-Type" = "application/json" } `
+  -Body '{"url":"https://www.udemy.com/course/kubernetes"}'
 ```
 **Response**
 ```json
@@ -123,7 +126,7 @@ curl -X POST http://localhost:8080/api/v1/shorten \
 
 **Redirect**
 ```
-curl -i http://localhost:8080/aBc123
+Invoke-WebRequest -Uri "http://localhost:8080/RAC09x9V" -MaximumRedirection 0 -ErrorAction Ignore
 ```
 ** Response **
 ```
@@ -133,7 +136,7 @@ Location: https://www.udemy.com/course/kubernetes
 
 **Metrics**
 ```
-curl http://localhost:8080/api/v1/metrics/top-domains
+Invoke-RestMethod -Uri "http://localhost:8080/api/v1/metrics/top-domains" -Method GET
 ```
 ** Response **
 ```json
