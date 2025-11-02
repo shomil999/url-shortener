@@ -98,11 +98,11 @@ docker run -p 8080:8080 -e BASE_URL=http://localhost:8080 shomil/url-shortener:v
 
 # API Endpoints
 
-| Method | Endpoint                      | Description                        | Body                                     |       
-| ------ | ----------------------------- | ---------------------------------- |------------------------------------------|
-| `POST` | `/api/v1/shorten`             | Shorten a long URL                 |{"url": "https://ww.udemy.com/kubernetes"}|
-| `GET`  | `/{code}`                     | Redirect to original URL           |                                          |      
-| `GET`  | `/api/v1/metrics/top-domains` | Fetch top 3 most shortened domains |                                          |
+| Method | Endpoint                      | Description                        | Body                                      |       
+| ------ | ----------------------------- | ---------------------------------- |------------------------------------------ |
+| `POST` | `/api/v1/shorten`             | Shorten a long URL                 |{"url": "https://ww.udemy.com/kubernetes" }|
+| `GET`  | `/{code}`                     | Redirect to original URL           |                                           |      
+| `GET`  | `/api/v1/metrics/top-domains` | Fetch top 3 most shortened domains |                                           |
 
 # Example Usage
 
