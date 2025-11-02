@@ -98,11 +98,11 @@ docker run -p 8080:8080 -e BASE_URL=http://localhost:8080 shomil/url-shortener:v
 
 # API Endpoints
 
-| Method | Endpoint                      | Description                        |
-| ------ | ----------------------------- | ---------------------------------- |
-| `POST` | `/api/v1/shorten`             | Shorten a long URL                 |
-| `GET`  | `/{code}`                     | Redirect to original URL           |
-| `GET`  | `/api/v1/metrics/top-domains` | Fetch top 3 most shortened domains |
+| Method | Endpoint                      | Description                        | Body                                     |       
+| ------ | ----------------------------- | ---------------------------------- |------------------------------------------|
+| `POST` | `/api/v1/shorten`             | Shorten a long URL                 |{"url": "https://ww.udemy.com/kubernetes"}|
+| `GET`  | `/{code}`                     | Redirect to original URL           |                                          |      
+| `GET`  | `/api/v1/metrics/top-domains` | Fetch top 3 most shortened domains |                                          |
 
 # Example Usage
 
@@ -124,21 +124,21 @@ Invoke-RestMethod -Uri "http://localhost:8080/api/v1/shorten" `
 }
 ```
 
-**Redirect**
+* **Redirect**
 ```
 Invoke-WebRequest -Uri "http://localhost:8080/RAC09x9V" -MaximumRedirection 0 -ErrorAction Ignore
 ```
-** Response **
+**Response**
 ```
 HTTP/1.1 302 Found
 Location: https://www.udemy.com/course/kubernetes
 ```
 
-**Metrics**
+* **Metrics**
 ```
 Invoke-RestMethod -Uri "http://localhost:8080/api/v1/metrics/top-domains" -Method GET
 ```
-** Response **
+**Response**
 ```json
 [
   {"domain":"udemy.com","count":3},
